@@ -2,6 +2,8 @@
 #include "../keyboard_and_click/keyboard_and_click.h"
 #include <stdio.h>
 
+#define PK_NAME "World Zero Cmds"
+
 #define INVENTORY_SLOT_SIZE 120
 
 #define INVENTORY_UPPER_MARKER_X 1255
@@ -14,25 +16,25 @@
 void switch_charm(void* ctx);
 
 void world_zero_cmds_register(cmd_list* cmds_list){
-    cmds_list->data = malloc(sizeof(cmd_manager));
-    cmds_list->data[0] = (cmd_manager){VK_NUMPAD8, 0, switch_charm, NULL};
-    cmds_list->size = 1;
+    cmd_manager temp_cm[] = {
+        {KEY_NUMPAD8, 0, switch_charm, NULL},
+    };
+
+    cmds_register(cmds_list, temp_cm, sizeof(temp_cm));
+    PRINT_PK_CMD_NB(PK_NAME, temp_cm);
 }
 
 
 void switch_charm(void* ctx){
     click(INVENTORY_BTN_X, INVENTORY_BTN_Y);
-    Sleep(DELAY);
+    sleep_ms(DELAY);
     
-    COLORREF inventory_upper_marker_color = get_pixel_color(INVENTORY_UPPER_MARKER_X, INVENTORY_UPPER_MARKER_Y);    
+    color inventory_upper_marker_color = get_pixel_color(INVENTORY_UPPER_MARKER_X, INVENTORY_UPPER_MARKER_Y);    
     if(inventory_upper_marker_color != INVENTORY_UPPER_MARKER_COLOR){
         scroll_up(100);
-        Sleep(DELAY);
+        sleep_ms(DELAY);
         scroll_down(3);
-        Sleep(DELAY);
+        sleep_ms(DELAY);
     }
-
-
-    
     printf("%u\n", inventory_upper_marker_color);
 }

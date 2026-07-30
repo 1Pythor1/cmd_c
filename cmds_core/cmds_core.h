@@ -1,9 +1,12 @@
 #ifndef CMDS_CORE_H
 #define CMDS_CORE_H
-#include <windows.h>
+#include "../keyboard_and_click/keyboard_and_click.h"
+
+#define ARRAY_LEN(arr) (sizeof(arr) / sizeof((arr)[0]))
+#define PRINT_PK_CMD_NB(pk_name, arr) printf("%s: %d cmds register\n", (pk_name), ARRAY_LEN(arr))
 
 typedef struct {
-    WORD key_code;
+    key_code key_code;
     short state;
     void (*cmd)(void*);
     void* context;
@@ -14,6 +17,7 @@ typedef struct {
     int size;
 } cmd_list;
 
+void cmds_register(cmd_list* cmds_list, cmd_manager* cmds_m, int cmds_m_size);
 int init_cmds_core(cmd_list* cmds_list);
 
 #endif 
