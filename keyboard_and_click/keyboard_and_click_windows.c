@@ -146,7 +146,7 @@ const WORD KeyToVK[124] = {
 };
 
 short get_async_key_state(key_code key){
-    return GetAsyncKeyState(KeyToVK[key]) & 0x8000;
+    return (unsigned short)GetAsyncKeyState(KeyToVK[key]) >> 15;
 }
 void sleep_ms(int delay){
     Sleep(delay);
