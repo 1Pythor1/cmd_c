@@ -162,7 +162,9 @@ short get_async_key_state(key_code key);
 void sleep_ms(int delay);
 
 void click(int x, int y);
+short is_clicked(void);
 void move_mouse(int x, int y);
+short is_mouse_moved(int duration);
 void scroll_down(int ticks);
 void scroll_up(int ticks);
 void release_key(key_code key);

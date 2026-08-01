@@ -1,12 +1,26 @@
 #include "cmds_core.h"
+#include "timer_clock/timer_clock.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define CMD_MANAGER_SIZE  sizeof(cmd_manager)
 
-void stop(short* sw);
-void stop_cmd(void* ctx);
+//--- Cmds ---
+void stop(short* sw){
+    *sw = 0;
+}
+void stop_cmd(void* ctx){
+    stop((short*)ctx);
+}
+//---======---
+
+void free_cmd_list(cmd_list* self){
+    for(int i = 0; i < self->size; i++){        
+        free(self->data[i].key_code);
+    } 
+    free(self->data);
+}
 
 void cmds_register(cmd_list* cmds_list, cmd_manager* cmds_m, int cmds_m_size){
     cmds_list->data = realloc(
@@ -49,17 +63,7 @@ int init_cmds_core(cmd_list* cmds_list){
         sleep_ms(10);
     }
     
-    for(int i = 0; i < cmds_list->size; i++){        
-        free(cmds_list->data[i].key_code);
-    }        
-    free(cmds_list->data);
+    free_cmd_list(cmds_list);
     return 0;
 }
 
-void stop_cmd(void* ctx){
-    stop((short*)ctx);
-}
-
-void stop(short* sw){
-    *sw = 0;
-}

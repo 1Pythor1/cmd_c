@@ -1,4 +1,5 @@
 #include "keyboard_and_click.h"
+#include "../cmds_core/timer_clock/timer_clock.h"
 #include <windows.h>
 
 const WORD KeyToVK[124] = {
@@ -145,6 +146,9 @@ const WORD KeyToVK[124] = {
     /* KEY_MEDIA_PLAYPAUSE 123 */ 0xB3,
 };
 
+short is_clicked(void){
+    return (unsigned short)GetAsyncKeyState(VK_LBUTTON) >> 15;
+}
 short get_async_key_state(key_code key){
     return (unsigned short)GetAsyncKeyState(KeyToVK[key]) >> 15;
 }
@@ -154,6 +158,19 @@ void sleep_ms(int delay){
 
 void move_mouse(int x, int y){
     SetCursorPos(x, y);
+}
+short anym_mouse_moved(void* ctx){
+    POINT start, current;
+    start = *(POINT*)ctx;
+    GetCursorPos(&current);
+
+    return !(start.x == current.x && start.y == current.y);
+}
+short is_mouse_moved(int duration){
+    POINT start;
+    GetCursorPos(&start);
+
+    return wait_expression(anym_mouse_moved, &start, duration);
 }
 
 void click(int x, int y){

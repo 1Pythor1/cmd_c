@@ -10,7 +10,10 @@ typedef struct {
     int size;
 } cmd_list;
 
+void free_cmd_list(cmd_list* self);
+
 void cmds_register(cmd_list* cmds_list, cmd_manager* cmds_m, int cmds_m_size);
 int init_cmds_core(cmd_list* cmds_list);
+
 
 #endif
