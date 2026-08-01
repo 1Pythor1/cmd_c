@@ -35,7 +35,8 @@ short wait_expression(short (*expression)(void*), void* ctx,  int duration){
     timer_clock* timer = new_timer_clock();
     start_timer_clock(timer, duration);
 
-    while(!((result = expression(ctx)) || check_timer_clock(timer)));
+    while(!((result = expression(ctx)) || check_timer_clock(timer)))
+        sleep_ms(10);
     
     free_timer_clock(timer);
     return result;
