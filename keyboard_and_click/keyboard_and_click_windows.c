@@ -149,7 +149,7 @@ const WORD KeyToVK[124] = {
 short is_clicked(void){
     return (unsigned short)GetAsyncKeyState(VK_LBUTTON) >> 15;
 }
-short get_async_key_state(key_code key){
+short is_key_pressed(key_code key){
     return (unsigned short)GetAsyncKeyState(KeyToVK[key]) >> 15;
 }
 void sleep_ms(int delay){

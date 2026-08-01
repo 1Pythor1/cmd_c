@@ -41,7 +41,7 @@ short anym_wait_for_item_swap_click(void* ctx){
     struct anym_wait_for_item_swap_click_ctx coordonate = *(struct anym_wait_for_item_swap_click_ctx*)ctx;
     move_mouse(INVENTORY_SLOT_I(coordonate.x, coordonate.y));
     
-    return is_clicked();
+    return is_clicked() || is_key_pressed(KEY_B);
 }
 short anym_wait_for_open_inventory(void* ctx){
     color inventory_btn_all = get_pixel_color(INVENTORY_BTN_ALL_X, INVENTORY_TAB_BTNS_Y); 
@@ -54,6 +54,7 @@ short anym_wait_for_open_inventory(void* ctx){
 }
 void switch_item(void* ctx){
     wait_expression(anym_wait_for_open_inventory, NULL, SECOND);
+    sleep_ms(DELAY);
 
     color inventory_upper_marker_color = get_pixel_color(INVENTORY_UPPER_MARKER_X, INVENTORY_UPPER_MARKER_Y);    
     if(inventory_upper_marker_color != INVENTORY_UPPER_MARKER_COLOR){

@@ -158,7 +158,6 @@ typedef unsigned short key_code;
 
 typedef unsigned int color;
 
-short get_async_key_state(key_code key);
 void sleep_ms(int delay);
 
 void click(int x, int y);
@@ -170,6 +169,7 @@ void scroll_up(int ticks);
 void release_key(key_code key);
 void hold_key(key_code key);
 void press_key(key_code key);
+short is_key_pressed(key_code key);
 color get_pixel_color(int x, int y);
 
 #endif  

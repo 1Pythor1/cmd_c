@@ -20,7 +20,7 @@ short get_keys_states_cmd_manager(cmd_manager *self){
     short result = 1;
     
     for(int i = 0; i < self->key_codes_nb; i++){
-        result &= get_async_key_state(self->key_code[i]);
+        result &= is_key_pressed(self->key_code[i]);
     };
     return result;
 }
